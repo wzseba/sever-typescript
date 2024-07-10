@@ -1,5 +1,1 @@
-import productos from './producto.routes'
-
-export{
-    productos
-}
+export * from './producto.routes.js';
