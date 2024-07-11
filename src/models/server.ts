@@ -1,37 +1,35 @@
-import express, { Application } from 'express'  
-import {productos} from '../routes'
+import express, { Application } from 'express';
+import { productos } from '../routes/index.js';
 
-class Server{
-    private app: Application
-    private port: string
-    private productoPath: string
+export class Server {
+  private app: Application;
+  private port: string;
+  private productoPath: string;
 
-    constructor(){
-        this.app = express()
-        this.port = process.env.PORT || '8000'
+  constructor() {
+    this.app = express();
+    this.port = process.env.PORT || '8000';
 
-        // Paths
-        this.productoPath = '/api/producto';
+    // Paths
+    this.productoPath = '/api/producto';
 
-        // Conexion a DB
+    // Conexion a DB
 
-        // middlewares
+    // middlewares
 
-        // Inicializar rutas
-        this.routes()
+    // Inicializar rutas
+    this.routes();
 
-        // Inicialiazar conexion db
-    }
+    // Inicialiazar conexion db
+  }
 
-    routes() {
-        this.app.use(this.productoPath, productos);
-      }
+  routes() {
+    this.app.use(this.productoPath, productos);
+  }
 
-    listen(){
-        this.app.listen(this.port, ()=>{
-            console.log('Server run on port ' + process.env.PORT)
-        })
-    }
+  listen() {
+    this.app.listen(this.port, () => {
+      console.log('Server run on port ' + process.env.PORT);
+    });
+  }
 }
-
-export default Server
