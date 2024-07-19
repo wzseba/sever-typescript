@@ -10,6 +10,12 @@ const getProductoPorId = (req: Request, res: Response) => {
   res.json({ msg: `Producto con id: ${id}` });
 };
 
+const postProducto = (req: Request, res: Response) => {
+  const { nombre, precio } = req.body;
+
+  res.json({ msg: 'Producto creado correctamente', nombre, precio });
+};
+
 const putProducto = (req: Request, res: Response) => {
   const { id } = req.params;
 
@@ -21,4 +27,10 @@ const delProducto = (req: Request, res: Response) => {
 
   res.json({ msg: `Se elimino produco id: ${id}` });
 };
-export { getProductos, getProductoPorId, putProducto, delProducto };
+export {
+  getProductos,
+  getProductoPorId,
+  postProducto,
+  putProducto,
+  delProducto
+};
