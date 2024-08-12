@@ -1,6 +1,7 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import { productos } from '../routes/index.js';
+import { dbConnection } from '../database/index.js';
 
 export class Server {
   private app: Application;
@@ -15,6 +16,7 @@ export class Server {
     this.productoPath = '/api/producto';
 
     // Conexion a DB
+    this.connectDB();
 
     // middlewares
     this.middleware();
@@ -23,6 +25,14 @@ export class Server {
     this.routes();
 
     // Inicialiazar conexion db
+  }
+  async connectDB() {
+    try {
+      await dbConnection.authenticate();
+      console.log('Database sincronizada');
+    } catch (error) {
+      console.error('Error al conectar con database:', error);
+    }
   }
 
   middleware() {
