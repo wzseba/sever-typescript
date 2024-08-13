@@ -1,12 +1,14 @@
 import express, { Application } from 'express';
 import cors from 'cors';
-import { productos } from '../routes/index.js';
+import { productos, usuarios } from '../routes/index.js';
 import { dbConnection } from '../database/index.js';
+import { Usuario } from './usuario.js';
 
 export class Server {
   private app: Application;
   private port: string;
   private productoPath: string;
+  private usuarioPath: string;
 
   constructor() {
     this.app = express();
@@ -14,6 +16,7 @@ export class Server {
 
     // Paths
     this.productoPath = '/api/producto';
+    this.usuarioPath = '/api/usuarios';
 
     // Conexion a DB
     this.connectDB();
@@ -28,8 +31,7 @@ export class Server {
   }
   async connectDB() {
     try {
-      await dbConnection.authenticate();
-      console.log('Database sincronizada');
+      await dbConnection.sync();
     } catch (error) {
       console.error('Error al conectar con database:', error);
     }
@@ -42,6 +44,7 @@ export class Server {
 
   routes() {
     this.app.use(this.productoPath, productos);
+    this.app.use(this.usuarioPath, usuarios);
   }
 
   listen() {
