@@ -1,10 +1,9 @@
-import { Sequelize, DataTypes } from 'sequelize';
-const sequelize = new Sequelize({ dialect: 'postgres' });
+import { DataTypes } from 'sequelize';
+import { dbConnection } from '../database/index.js';
 
-export const Usuario = sequelize.define(
+export const Usuario = dbConnection.define(
   'Usuario',
   {
-    // Model attributes are defined here
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -15,11 +14,11 @@ export const Usuario = sequelize.define(
       allowNull: false
     },
     estado: {
-      type: DataTypes.BOOLEAN
-      // allowNull defaults to true
+      type: DataTypes.BOOLEAN,
+      allowNull: false
     }
   },
   {
-    // Other model options go here
+    timestamps: false
   }
 );
