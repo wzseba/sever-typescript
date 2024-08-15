@@ -2,7 +2,6 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import { productos, usuarios } from '../routes/index.js';
 import { dbConnection } from '../database/index.js';
-import { Usuario } from './usuario.js';
 
 export class Server {
   private app: Application;
@@ -31,9 +30,12 @@ export class Server {
   }
   async connectDB() {
     try {
+      await dbConnection.authenticate();
       await dbConnection.sync();
     } catch (error) {
       console.error('Error al conectar con database:', error);
+      // Finaliza el proceso si no se puede conectar a la base de datos
+      process.exit(1);
     }
   }
 
