@@ -1,8 +1,13 @@
 import { Request, Response } from 'express';
-import { Usuario } from '../models/index.js';
+import { Usuario } from '../models/usuario.js';
 
-const getUsuarios = (req: Request, res: Response) => {
-  res.json({ msg: 'Obtner usuarios' });
+const getUsuarios = async (req: Request, res: Response) => {
+  try {
+    const usuarios = await Usuario.findAll();
+    res.json({ msg: 'Obtner usuarios', usuarios });
+  } catch (error) {
+    console.error();
+  }
 };
 
 const getUsuariosPorId = (req: Request, res: Response) => {
@@ -13,9 +18,8 @@ const getUsuariosPorId = (req: Request, res: Response) => {
 
 const postUsuario = async (req: Request, res: Response) => {
   try {
-    const { id, nombre, estado } = req.body;
-    const usuario = await Usuario.create({ id, nombre, estado });
-    console.log(usuario);
+    const { nombre, estado } = req.body;
+    const usuario = await Usuario.create({ nombre, estado });
     res.json({ msg: `Usuario creado`, usuario });
   } catch (error) {
     res.json({ error });
